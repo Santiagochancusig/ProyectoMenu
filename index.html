@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Administracion 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.6/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="controller.js"></script>
+</head>
+<body ng-controller="ControllerUsuarios" class="jumbotron text-center"  >
+<div class="navbar-wrapper">
+    <div class="container-fluid">
+        <nav class="navbar navbar-fixed-top">
+            <div class="container">
+                <label ng-style="myObj" > SISTEMA DE ADMINISTRACION</label><br>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"  value="refrescar" onclick="javascript:window.location.reload();" >Inicio</a>
+
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" >
+                    <ul class="nav navbar-nav"  ng-show="mostarNavBar">
+                        <li class=" dropdown" ng-repeat="opciones in navBar" ng-show="opciones.Padre==''|| opciones.Padre==0"><a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{opciones.descripcion_menu}} <span
+                                class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Navbar/submenus/{{hijos.url}}" target="_blank" ng-repeat="hijos in navBar" ng-show="opciones.id_menu==hijos.Padre">{{hijos.descripcion_menu}}</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                    </ul>
+                    <a class="navbar-brand" href="#"  ng-click="showOpciones(true)">Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div ng-show="mostarlogin" >
+    <form action="checklogin.php" method="post" name="formPassword">
+
+        <label>Nombre Usuario:</label><br>
+        <input ng-model="username" name="username" type="text" id="username"  required><br>
+
+        <br><br>
+        <label>Password:</label><br>
+        <input ng-model="password" name="password" type="password" id="password" required><br>
+
+        <br><br>
+        <div>
+        <input type="button" name="Submit" value="Ingresar" ng-click="usuariologin(username,password)">
+
+
+        </div>
+
+
+    </form>
+
+</div>
+</body>
+</html>

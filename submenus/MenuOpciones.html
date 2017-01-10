@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Accione del Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.6/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../controller.js"></script>
+</head>
+<body ng-controller="ControllerUsuarios" ng-init="getMenu()" ng-init="getPerfil()" >
+<h1 class="text-center">ADMINISTRACION  OPCIONES</h1>
+<div class="container" >
+    <table  class="table"  class="text-center" >
+        <tr>
+            <th>Id Menu </th>
+            <th>Descripcion</th>
+            <th>Estado</th>
+            <th>Padre</th>
+            <th>Direccion</th>
+        </tr>
+        <tr ng-repeat="menu in menus" ng-model="menus">
+            <th>{{menu.id_menu}}</th>
+            <th>{{menu.descripcion_menu}}</th>
+            <th>{{menu.estado}}</th>
+            <th>{{menu.Padre}}</th>
+            <th>{{menu.url}}</th>
+            <td><button type="button" data-toggle="modal" data-target="#modalModificar{{menu.id_menu}}" >Modificar</button>
+                <div class="modal fade" id="modalModificar{{menu.id_menu}}" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> {{menu.descripcion_menu}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3>Modificacion de Datos</h3>
+                                <label>Opcion</label><br>
+                                <input type="text" name="Nombre"placeholder="{{menu.descripcion_menu}}"ng-model="M_Opcion"><br>
+                                <label>Es padre</label><br>
+                                <form>
+                                    Es Padre:
+                                    <input type="radio" ng-model="opciones" value="1">Si
+                                    <input type="radio" ng-model="opciones" value="2">No
+                                </form>
+                                <label ng-show="opciones==2" >Menu Hijos</label><br>
+                                <select ng-model="opciones1"ng-show="opciones==2" >
+                                    <option value=" " selected="selected">Seleccione el Padre</option>
+                                    <option ng-repeat="x in menus" value="{{x.id_menu}}"ng-show="x.Padre==''|| x.Padre==0">{{x.descripcion_menu}}</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modificarMenu(menu.id_menu,M_Opcion,menu.estado,opciones,opciones1,menu.url)" >Actualizar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td><button type="button"  ng-show="menu.estado==1" ng-click="cambioEstadoMenu(menu.id_menu,menu.estado)" value="refrescar" onclick="javascript:window.location.reload();">Desactivar </button>
+                <button type="button"  ng-show="menu.estado==0" ng-click="cambioEstadoMenu(menu.id_menu,menu.estado)" value="refrescar" onclick="javascript:window.location.reload();">Activar</button>
+            </td>
+
+        </tr>
+    </table>
+
+
+    <button type="button"  data-toggle="modal" data-target="#modalAgregar" ng-click="getPerfil()">Agregar opcion</button>
+    <div class="modal fade" id="modalAgregar" role="dialog">
+        <div class="modal-dialog" class="">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Agregar Opcion</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Ingrese los Datos</h3>
+                    <label>Descripcion</label><br>
+                    <input type="text" name="descripcion_menu"ng-model="A_descripcion_menu"><br>
+                    <label>ubicacion</label><br>
+                    <input type="text" name="ubicacion"ng-model="A_ubicacion"><br>
+                    <form>
+                        <label>Es Menu Principal?:</label><br>
+                        <input type="radio" ng-model="opciones" value="1">Si
+                        <input type="radio" ng-model="opciones" value="2">No
+                    </form>
+                    <label ng-show="opciones==2" >Menu Hijos</label><br>
+                    <select ng-model="opciones1"ng-show="opciones==2" >
+                        <option value=" " selected="selected">Seleccione el Padre</option>
+                        <option ng-repeat="x in menus" value="{{x.id_menu}}"ng-show="x.Padre==''|| x.Padre==0">{{x.descripcion_menu}}</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="nuevoMenu(A_descripcion_menu,'1',opciones,opciones1,A_ubicacion)">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html
